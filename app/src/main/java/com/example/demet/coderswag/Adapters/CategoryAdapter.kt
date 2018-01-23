@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.demet.coderswag.Model.Category
 import com.example.demet.coderswag.R
+import com.example.demet.coderswag.R.id.categoryName
 
 /**
  * Created by demet on 2018. 01. 23..
@@ -20,17 +21,24 @@ class CategoryAdapter(context: Context, categories: List<Category>): BaseAdapter
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val categoryView: View
-        categoryView = LayoutInflater.from(context).inflate(R.layout.category_list_item, null)
-        val categoryImage: ImageView = categoryView.findViewById(R.id.categoryImage)
-        val categoryName: TextView = categoryView.findViewById(R.id.categoryName)
+        val holder: ViewHolder
+        if(convertView == null){
+            categoryView = LayoutInflater.from(context).inflate(R.layout.category_list_item, null)
+            holder = ViewHolder()
+            holder.categoryImage = categoryView.findViewById(R.id.categoryImage)
+            holder.categoryName = categoryView.findViewById(R.id.categoryName)
+
+            categoryView.tag = holder
+        }else{
+            holder = convertView.tag as ViewHolder
+            categoryView = convertView
+        }
 
         val category = categories[position]
 
         val resourceId = context.resources.getIdentifier(category.Image,"drawable", context.packageName)
-        categoryImage.setImageResource(resourceId)
-
-
-        categoryName.text = category.title
+        holder.categoryImage?.setImageResource(resourceId)
+        holder.categoryName?.text = category.title
 
 
 
@@ -47,5 +55,10 @@ class CategoryAdapter(context: Context, categories: List<Category>): BaseAdapter
 
     override fun getCount(): Int {
        return categories.count()
+    }
+
+    private class ViewHolder{
+        var categoryImage: ImageView? = null
+        var categoryName: TextView? = null
     }
 }
