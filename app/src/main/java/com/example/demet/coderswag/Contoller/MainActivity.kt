@@ -1,7 +1,8 @@
-package com.example.demet.coderswag
+package com.example.demet.coderswag.Contoller
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.demet.coderswag.R
 
 class MainActivity : AppCompatActivity() {
 
